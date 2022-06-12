@@ -1,7 +1,6 @@
 pub mod resource;
 
 use reqwasm::http::{Request, Response};
-use serde_json::error;
 use yew::prelude::*;
 use crate::resource::Resource;
 
@@ -51,8 +50,8 @@ fn library(props: &ResourceLibraryProperties) -> Html {
         html! {
             <div>
                 <ResourceFolder topic={topic} resources={vec![
-                    Resource::File { description: "This file kills facists".into() },
-                    Resource::Link { description: "This link kills facists".into(), link: "https://www.newteachercollab.com/about-1".into() }]}/>
+                    Resource::File { name: "file".into(), description: "This file kills facists".into() },
+                    Resource::Link { name: "link".into(),  description: "This link kills facists".into(), link: "https://www.newteachercollab.com/about-1".into() }]}/>
             </div>
         }
     }).collect::<Html>()
@@ -82,9 +81,14 @@ fn app() -> Html {
                             panic!("Log other shits")
                         }
                     };
-                let fetched_topics: Vec<String> = response.json()
+                let fetched_topics: Vec<String> = match response.json()
                     .await
-                    .unwrap();
+                    {
+                        Ok(json) => json ,
+                        Err(error) => {
+                            panic!("Json parse error {error:?}")
+                        }
+                    };
                 topics.set(fetched_topics)
             });
             || ()
