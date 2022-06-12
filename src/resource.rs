@@ -38,9 +38,9 @@ impl Resource {
 
 
 mod tests {
+
     use super::*;
-
-
+    
     #[test]
     fn test_serde() {
         let r = Resource::File { name:"file name".into(), description: "Jacks file".into() };

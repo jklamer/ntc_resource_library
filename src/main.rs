@@ -46,12 +46,38 @@ struct ResourceLibraryProperties {
 fn library(props: &ResourceLibraryProperties) -> Html {
     props.topics.iter().map(|topic|
     {
+        let resources = use_state(|| vec![]);
+        {
+            let resources = resources.clone();
+            let topic = topic.clone();
+            use_effect_with_deps(move |_| {
+                let topic = topic.clone();
+                let resources = resources.clone();
+                wasm_bindgen_futures::spawn_local(async move {
+                    let response: Response = match Request::get(&("/".to_owned() + &topic + "/resources.json")).send().await {
+                            Ok(response) => response,
+                            Err(error) => {
+                               panic!("Error requesting resources for topic {topic}: {error:?}");
+                            }
+                        };
+                    let fetched_resources: Vec<Resource> = match response.json()
+                        .await
+                        {
+                            Ok(json) => json ,
+                            Err(error) => {
+                                panic!("Json parse error {error:?}")
+                            }
+                        };
+                    resources.set(fetched_resources);
+                });
+                || ()
+            }, ());
+        }
         let topic = topic.clone();
+
         html! {
             <div>
-                <ResourceFolder topic={topic} resources={vec![
-                    Resource::File { name: "file".into(), description: "This file kills facists".into() },
-                    Resource::Link { name: "link".into(),  description: "This link kills facists".into(), link: "https://www.newteachercollab.com/about-1".into() }]}/>
+                <ResourceFolder topic={topic} resources={(*resources).clone()}/>
             </div>
         }
     }).collect::<Html>()
@@ -59,7 +85,6 @@ fn library(props: &ResourceLibraryProperties) -> Html {
 
 #[function_component(App)]
 fn app() -> Html {
-
     let topics = use_state(|| vec![]);
     {
         let topics = topics.clone();
@@ -69,16 +94,7 @@ fn app() -> Html {
                 let response: Response = match Request::get("/topics.json").send().await {
                         Ok(response) => response,
                         Err(error) => {
-                            match error {
-                                reqwasm::Error::JsError(js_error) => {
-                                    let message = js_error.message;
-                                    let name = js_error.name;
-                                    panic!("name:{name:?} message: {message:?}")
-                                },
-                                reqwasm::Error::SerdeError(_) => todo!(),
-                                reqwasm::Error::Other(_) => todo!(),
-                            }
-                            panic!("Log other shits")
+                           panic!("Error requesting topics: {error:?}");
                         }
                     };
                 let fetched_topics: Vec<String> = match response.json()

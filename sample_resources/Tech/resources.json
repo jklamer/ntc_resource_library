@@ -1,1 +1,4 @@
-["tech_resource1","tech_resource2"]
+[
+    {"Link":{"name":"This website","description":"an affinity space not defined by whose in and who is out","link":"https://newteachercollab.com/"}},
+    {"File":{"name":"file name","description":"Jacks tech file"}}
+]
