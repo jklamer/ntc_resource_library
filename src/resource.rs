@@ -3,8 +3,8 @@ use std::borrow::Borrow;
 use serde::{Serialize, Deserialize};
 use yew::prelude::*;
 
-const RESOUCES_FILE: &str = "resources.json";
-const TOPICS_FILE: &str = "topics.json";
+pub const RESOUCES_FILE: &str = "resources.json";
+pub const TOPICS_FILE: &str = "topics.json";
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub enum Resource{
@@ -38,10 +38,22 @@ impl Resource {
             Resource::Image { name, description, source } => {
                 match source {
                     ImageSource::File { filename } => {
-                        html!{}
+                        html!{
+                            <>
+                                <h3>{name}</h3>
+                                <p>{description}</p>
+                                <p>{filename}</p>
+                            </>
+                        }
                     },
                     ImageSource::Link { link } => {
-                        html!{}
+                        html!{
+                            <>
+                                <h3>{name}</h3>
+                                <p>{description}</p>
+                                <p>{link}</p>
+                            </>
+                        }
                     },
                 }
             },

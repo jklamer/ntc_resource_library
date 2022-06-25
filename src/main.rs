@@ -1,7 +1,5 @@
 pub mod resource;
 
-use std::path::PathBuf;
-
 use reqwasm::http::{Request, Response};
 use resource::Topic;
 use yew::prelude::*;

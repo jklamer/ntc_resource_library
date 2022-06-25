@@ -1,1 +1,1 @@
-trunk build; cp -r sample_resources/  dist/
+trunk build; cp -r test_dist/  dist/

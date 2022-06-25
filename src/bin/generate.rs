@@ -1,8 +1,8 @@
-use std::{collections::HashMap, cell::RefCell, path::Path};
+use std::{collections::HashMap, cell::RefCell, path::{Path, PathBuf}, fs::FileType};
 
 use clap::Parser;
 use serde::Deserialize;
-use ntc_resource_library::resource::{Resource, Topic, ImageSource};
+use ntc_resource_library::resource::{Resource, Topic, ImageSource, TOPICS_FILE, RESOUCES_FILE};
 
 
 #[derive(Parser, Debug)]
@@ -56,17 +56,53 @@ fn main() {
     topic_list.sort_by(|(topic1, _), (topic2, _)| {
         topic1.full_topic_path().len().cmp(&topic2.full_topic_path().len()).reverse()
     });
-    dbg!(&topic_list);
+    //dbg!(&topic_list);
     let output_path = Path::new(args.output_path.as_str());
     std::fs::create_dir(output_path);
-    dbg!(output_path.canonicalize());
+    //dbg!(output_path.canonicalize());
     for (topic, resources) in topic_list.iter() {
-        
+        make_sub_topics_file_structure(&output_path.canonicalize().unwrap(), topic, resources)
     }
 }
 
-fn make_sub_topics_file_structure(output_path: &Path, topic: &Topic) {
-    
+
+fn make_sub_topics_file_structure(output_path: &PathBuf, topic: &Topic, resources: &Vec<Resource>) {
+    let original_output_path =  output_path.clone();
+    let mut output_path = output_path.clone();
+    output_path.push(".".to_string() + topic.full_topic_path().as_str());
+    std::fs::create_dir_all(&output_path).expect("counldn't make directories");
+    std::fs::write(output_path.as_path().join(RESOUCES_FILE), serde_json::to_string(resources).unwrap()).expect("Error wriring resources");
+    while output_path !=  original_output_path {
+        let dir =  std::fs::read_dir(&output_path).unwrap();
+        let mut sub_topics: Vec<String> =  vec![];
+        for d in dir
+        {
+            if let Ok(dir_entry) = d 
+            {
+                if let Ok(file_type) =  dir_entry.file_type() {
+                    if file_type.is_dir() {
+                        sub_topics.push(dir_entry.file_name().into_string().unwrap());
+                    }
+                }
+            }
+        }
+        std::fs::write(output_path.as_path().join(TOPICS_FILE), serde_json::to_string(&sub_topics).unwrap()).expect("error writing sub topics");
+        output_path.pop();
+    }
+    let dir =  std::fs::read_dir(&output_path).unwrap();
+    let mut sub_topics: Vec<String> =  vec![];
+    for d in dir
+    {
+        if let Ok(dir_entry) = d 
+        {
+            if let Ok(file_type) =  dir_entry.file_type() {
+                if file_type.is_dir() {
+                    sub_topics.push(dir_entry.file_name().into_string().unwrap());
+                }
+            }
+        }
+    }
+    std::fs::write(output_path.as_path().join(TOPICS_FILE), serde_json::to_string(&sub_topics).unwrap()).expect("error writing sub topics");
 }
 
 #[inline]
