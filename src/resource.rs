@@ -10,7 +10,7 @@ pub const TOPICS_FILE: &str = "topics.json";
 pub enum Resource{
     File{ name: String, description: String, filename: String},
     Link{ name: String, description: String,  link: String},
-    Image{ name: String, description: String, source: ImageSource}
+    Image{ name: String, description: String, alt_text: String, source: ImageSource}
 }
 
 impl Resource {
@@ -21,7 +21,7 @@ impl Resource {
             Resource::File { name, description, filename } => {
                 html!{
                     <>
-                        <h3>{name}</h3>
+                        <h3><a href={filename.clone()} target="_blank" rel="noopener noreferrer">{name}</a></h3>
                         <p>{description}</p>
                     </>
                 }
@@ -31,18 +31,18 @@ impl Resource {
                     <>
                         <h3>{name}</h3>
                         <p>{description}</p>
-                        <p>{link}</p>
+                        <p><a href={link.clone()} target="_blank" rel="noopener noreferrer">{"\u{1F517}"}</a></p>
                     </>
                 }
             },
-            Resource::Image { name, description, source } => {
+            Resource::Image { name, description, alt_text, source } => {
                 match source {
                     ImageSource::File { filename } => {
                         html!{
                             <>
                                 <h3>{name}</h3>
                                 <p>{description}</p>
-                                <p>{filename}</p>
+                                <img src={filename.clone()} alt={alt_text.clone()}/>
                             </>
                         }
                     },
@@ -51,7 +51,7 @@ impl Resource {
                             <>
                                 <h3>{name}</h3>
                                 <p>{description}</p>
-                                <p>{link}</p>
+                                <img src={link.clone()} alt={alt_text.clone()}/>
                             </>
                         }
                     },

@@ -122,5 +122,5 @@ fn parse_link(row: &ResourceRow) -> (Vec<Topic>, Resource) {
 
 fn parse_image(row: &ResourceRow) -> (Vec<Topic>, Resource) {
     assert!((row.link.is_some() ^ row.filename.is_some()) && row.alt_text.is_some(), "Image {} must only one of a link or file name with alt text", row.name);
-    (parse_topics_from_row(row),Resource::Image { name: row.name.clone(), description: row.description.clone(), source: ImageSource::from_row(row.filename.clone(), row.link.clone())})
+    (parse_topics_from_row(row), Resource::Image { name: row.name.clone(), description: row.description.clone(), alt_text: row.alt_text.clone().unwrap(), source: ImageSource::from_row(row.filename.clone(), row.link.clone())})
 }

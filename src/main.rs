@@ -95,7 +95,12 @@ fn folder(props: &ResourceFolderProperties) -> Html {
     html!{
         <div>
         <h2 onclick={on_folder_click}>
-            {props.topic.get_name()}
+            {props.topic.get_name()} 
+            if *expanded {
+                {"\u{1F4C2}"}
+            } else {
+                {"\u{1F4C1}"}
+            }
         </h2>
         if *expanded {
             {for (*sub_topics).iter().map(|sub_topic| {
