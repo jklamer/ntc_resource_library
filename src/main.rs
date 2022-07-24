@@ -58,7 +58,8 @@ struct ResourceFolderProperties {
 #[derive(Clone, Debug, PartialEq)]
 enum FolderStyle {
     Style1,
-    Style2
+    Style2,
+    Style3,
 }
 
 impl FolderStyle {
@@ -66,7 +67,8 @@ impl FolderStyle {
     fn inner_style(&self) -> FolderStyle {
         match self {
             FolderStyle::Style1 => Self::Style2,
-            FolderStyle::Style2 => Self::Style1,
+            FolderStyle::Style2 => Self::Style3,
+            FolderStyle::Style3 => Self::Style1,
         }
     }
 
@@ -74,6 +76,7 @@ impl FolderStyle {
         match self {
             FolderStyle::Style1 => "folder style1",
             FolderStyle::Style2 => "folder style2",
+            FolderStyle::Style3 => "folder style3",
         }
     }
 }
@@ -207,6 +210,9 @@ fn app() -> Html {
         <div class={stylesheet}>
             <div class="banner">
                 <span>{"Resource Library"}</span>
+            </div>
+            <div>
+            <p>{"Annie is making a description for me"}</p>
             </div>
             <div>
                 <ResourceLibrary topics={(*topics).clone()}/>

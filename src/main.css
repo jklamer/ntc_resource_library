@@ -35,8 +35,8 @@
     --color_33: 133,72,116;
     --color_34: 89,48,77;
     --color_35: 44,24,39;
-    --font_0: normal normal normal 24px/1.4em NTC,sans-serif;
-    --font_1: normal normal normal 16px/1.4em NTC,sans-serif;
+    --font_0: normal normal bold 24px/1.4em NTC,sans-serif;
+    --font_1: normal normal normal 20px/1.4em NTC,sans-serif;
     --font_2: normal normal normal 56px/1.4em NTC,sans-serif;
     --font_3: normal normal bold 600px/1.4em verdana,geneva,sans-serif;
     --font_4: normal normal normal 84px/1.4em NTC,sans-serif;
@@ -88,11 +88,24 @@ a, abbr, acronym, address, applet, b, big, blockquote, body, button, caption, ce
     margin-bottom: 10px;
 }
 
+.resource {
+    border: 1px;
+    border-style: dashed;
+    border-color: black;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
 .style1 {
     background-color: rgb(var(--color_12));
 }
 
 .style2 {
+    background-color: rgb(var(--color_16));
+}
+
+.style3 {
     background-color: rgb(var(--color_17));
 }
 
@@ -110,7 +123,7 @@ h2 {
 }
 
 h3 {
-    font: var(--font_0)
+    font: var(--font_1)
 }
 
 p body {

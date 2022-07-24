@@ -16,48 +16,54 @@ pub enum Resource{
 impl Resource {
     
     pub fn view(&self) -> Html {
-        
-        match self {
-            Resource::File { name, description, filename } => {
-                html!{
-                    <>
-                        <h3><a href={filename.clone()} target="_blank" rel="noopener noreferrer">{name}</a></h3>
-                        <p>{description}</p>
-                    </>
-                }
-            },
-            Resource::Link { name, description, link } => {
-                html! {
-                    <>
-                        <h3>{name}</h3>
-                        <p>{description}</p>
-                        <p><a href={link.clone()} target="_blank" rel="noopener noreferrer">{"\u{1F517}"}</a></p>
-                    </>
-                }
-            },
-            Resource::Image { name, description, alt_text, source } => {
-                match source {
-                    ImageSource::File { filename } => {
+        html!{
+            <div class="resource">
+                {
+                    match self {
+                    Resource::File { name, description, filename } => {
                         html!{
                             <>
-                                <h3>{name}</h3>
+                                <h3><a href={filename.clone()} target="_blank" rel="noopener noreferrer">{name}</a></h3>
                                 <p>{description}</p>
-                                <img src={filename.clone()} alt={alt_text.clone()}/>
                             </>
                         }
                     },
-                    ImageSource::Link { link } => {
-                        html!{
+                    Resource::Link { name, description, link } => {
+                        html! {
                             <>
                                 <h3>{name}</h3>
                                 <p>{description}</p>
-                                <img src={link.clone()} alt={alt_text.clone()}/>
+                                <p><a href={link.clone()} target="_blank" rel="noopener noreferrer">{"\u{1F517}"}</a></p>
                             </>
                         }
                     },
+                    Resource::Image { name, description, alt_text, source } => {
+                        match source {
+                            ImageSource::File { filename } => {
+                                html!{
+                                    <>
+                                        <h3>{name}</h3>
+                                        <p>{description}</p>
+                                        <img src={filename.clone()} alt={alt_text.clone()}/>
+                                    </>
+                                }
+                            },
+                            ImageSource::Link { link } => {
+                                html!{
+                                    <>
+                                        <h3>{name}</h3>
+                                        <p>{description}</p>
+                                        <img src={link.clone()} alt={alt_text.clone()}/>
+                                    </>
+                                    }
+                                },
+                            }
+                        },
+                    }
                 }
-            },
+            </div>
         }
+        
     }
 }
 
