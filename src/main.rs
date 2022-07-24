@@ -3,7 +3,10 @@ pub mod resource;
 use reqwasm::http::{Request, Response};
 use resource::Topic;
 use yew::prelude::*;
+use stylist::{yew::styled_component, Style};
 use crate::resource::Resource;
+
+const STYLE_FILE: &str = include_str!("main.css");
 
 #[derive(Clone, Properties, PartialEq)]
 struct ResourceListProperties {
@@ -49,6 +52,30 @@ fn resource_list(props : &ResourceListProperties) -> Html {
 #[derive(Clone, Debug, Properties, PartialEq)]
 struct ResourceFolderProperties {
     topic: Topic,
+    style: FolderStyle
+}
+
+#[derive(Clone, Debug, PartialEq)]
+enum FolderStyle {
+    Style1,
+    Style2
+}
+
+impl FolderStyle {
+
+    fn inner_style(&self) -> FolderStyle {
+        match self {
+            FolderStyle::Style1 => Self::Style2,
+            FolderStyle::Style2 => Self::Style1,
+        }
+    }
+
+    fn get_class(&self) -> &'static str {
+        match self {
+            FolderStyle::Style1 => "folder style1",
+            FolderStyle::Style2 => "folder style2",
+        }
+    }
 }
 
 #[function_component(ResourceFolder)]
@@ -93,7 +120,7 @@ fn folder(props: &ResourceFolderProperties) -> Html {
     };
     
     html!{
-        <div>
+        <div class={props.style.get_class()}>
         <h2 onclick={on_folder_click}>
             {props.topic.get_name()} 
             if *expanded {
@@ -105,7 +132,7 @@ fn folder(props: &ResourceFolderProperties) -> Html {
         if *expanded {
             {for (*sub_topics).iter().map(|sub_topic| {
                 html!{
-                    <ResourceFolder topic={props.topic.sub_topic(sub_topic)}/>
+                    <ResourceFolder topic={props.topic.sub_topic(sub_topic)} style={props.style.inner_style()}/>
                 }
             })}
             <ResourceList topic={props.topic.clone()}/>
@@ -124,14 +151,15 @@ fn library(props: &ResourceLibraryProperties) -> Html {
     props.topics.iter().map(|topic| {
         html! {
             <div>
-                <ResourceFolder topic={topic.clone()}/>
+                <ResourceFolder topic={topic.clone()} style={FolderStyle::Style1}/>
             </div>
         }
     }).collect::<Html>()
 }
 
-#[function_component(App)]
+#[styled_component(MyApp)]
 fn app() -> Html {
+    let stylesheet = Style::new(STYLE_FILE).expect("Should be able to parse CSS");
     let topics = use_state(|| vec![]);
     {
         let topics = topics.clone();
@@ -157,14 +185,40 @@ fn app() -> Html {
             || ()
         }, ());
     }
+    let font_load = 
+    "@font-face 
+        { 
+                font-family: NTC;
+                src: url(\"https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/0078f486-8e52-42c0-ad81-3c8d3d43f48e.woff2\") ; 
+        }
+        @font-face 
+        { 
+            font-family: NTC;
+            font-weight: bold; 
+            src: url(\"https://static.parastorage.com/services/third-party/fonts/user-site-fonts/fonts/d513e15e-8f35-4129-ad05-481815e52625.woff2\") ;
+        }";
+
+
     html! {
-        <div>
-            <h1>{"Resource Library"}</h1>
-            <ResourceLibrary topics={(*topics).clone()}/>
+        <>
+        <style>
+        {font_load}
+        </style>
+        <div class={stylesheet}>
+            <div class="banner">
+                <span>{"Resource Library"}</span>
+            </div>
+            <div>
+                <ResourceLibrary topics={(*topics).clone()}/>
+            </div>
         </div>
+        </>
     }
 }
 
+
+
+
 fn main() {
-    yew::start_app::<App>();
+    yew::start_app::<MyApp>();
 }

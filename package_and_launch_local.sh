@@ -1,17 +1,18 @@
 #! /bin/sh
 
 
-_term() {
-    kill $PID
+term() {
+    kill -9 $PID
     cd $CD
 }
 
-trap _term SIGTERM
-trap _term SIGINT
+trap term SIGTERM
+trap term SIGINT
+trap term SIGKILL
 
 ./package.sh
 CD=$(pwd)
-cd dist/
+cd ~/scratch/NTC_resource_library
 python3 -m http.server 8080 &
 PID=$!
 

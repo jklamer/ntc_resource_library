@@ -1,4 +1,4 @@
-use std::{collections::HashMap, cell::RefCell, path::{Path, PathBuf}, fs::FileType};
+use std::{collections::HashMap, cell::RefCell, path::{Path, PathBuf}};
 
 use clap::Parser;
 use serde::Deserialize;
@@ -58,7 +58,7 @@ fn main() {
     });
     //dbg!(&topic_list);
     let output_path = Path::new(args.output_path.as_str());
-    std::fs::create_dir(output_path);
+    std::fs::create_dir(output_path).expect("Directory should be able to be made at the given output path");
     //dbg!(output_path.canonicalize());
     for (topic, resources) in topic_list.iter() {
         make_sub_topics_file_structure(&output_path.canonicalize().unwrap(), topic, resources)

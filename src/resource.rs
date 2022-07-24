@@ -127,21 +127,18 @@ impl Topic {
 
 
 mod tests {
-
-    use super::*;
-
     #[test]
     fn test_serde() {
-        let r = Resource::File { name:"file name".into(), description: "Jacks file".into(),  filename: "hey.pdf".into()};
+        let r = crate::resource::Resource::File { name:"file name".into(), description: "Jacks file".into(),  filename: "hey.pdf".into()};
         let string_r = serde_json::to_string(&r).unwrap();
         println!("{string_r}");
-        let r2 = serde_json::from_str::<Resource>(&string_r).unwrap();
+        let r2 = serde_json::from_str::<crate::resource::Resource>(&string_r).unwrap();
         assert_eq!(r, r2);
 
-        let r = Resource::Link { name: "link name".into(), description: "Jacks link".into(), link:"https://newteachercollab.com/".into() };
+        let r = crate::resource::Resource::Link { name: "link name".into(), description: "Jacks link".into(), link:"https://newteachercollab.com/".into() };
         let string_r = serde_json::to_string(&r).unwrap();
         println!("{string_r}");
-        let r2 = serde_json::from_str::<Resource>(&string_r).unwrap();
+        let r2 = serde_json::from_str::<crate::resource::Resource>(&string_r).unwrap();
         assert_eq!(r, r2);
     }
 }

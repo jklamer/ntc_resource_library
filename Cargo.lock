@@ -133,6 +133,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "either"
+version = "1.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3f107b87b6afc2a64fd13cac55fe06d6c8859f12d4b14cbcdd2c67d0976781be"
+
+[[package]]
+name = "fastrand"
+version = "1.8.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a7a407cfaa3385c4ae6b23e84623d48c2798d06e3e6a1878f7f59f17b3f86499"
+dependencies = [
+ "instant",
+]
+
+[[package]]
 name = "futures"
 version = "0.3.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -359,6 +374,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "instant"
+version = "0.1.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a5bbe824c507c5da5956355e86a746d82e0e1464f65d862cc5e71da70e94b2c"
+dependencies = [
+ "cfg-if",
+ "js-sys",
+ "wasm-bindgen",
+ "web-sys",
+]
+
+[[package]]
+name = "itertools"
+version = "0.10.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a9a9d19fa1e79b6215ff29b9d6880b706147f16e9b1dbb1e4e5947b5b02bc5e3"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "0.4.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -392,6 +428,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "349d5a591cd28b49e1d1037471617a32ddcda5731b99419008085f72d5a53836"
 
 [[package]]
+name = "litrs"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9275e0933cf8bb20f008924c0cb07a0692fe54d8064996520bf998de9eb79aa"
+dependencies = [
+ "proc-macro2",
+]
+
+[[package]]
 name = "log"
 version = "0.4.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -407,6 +452,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
+name = "minimal-lexical"
+version = "0.2.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "68354c5c6bd36d73ff3feceb05efa59b6acb7626617f4962be322a825e61f79a"
+
+[[package]]
+name = "nom"
+version = "7.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a8903e5a29a317527874d0402f867152a3d21c908bb0b933e416c65e301d4c36"
+dependencies = [
+ "memchr",
+ "minimal-lexical",
+]
+
+[[package]]
 name = "ntc_resource_library"
 version = "0.1.0"
 dependencies = [
@@ -415,6 +476,7 @@ dependencies = [
  "reqwasm",
  "serde",
  "serde_json",
+ "stylist",
  "wasm-bindgen-futures",
  "yew",
 ]
@@ -562,6 +624,51 @@ name = "strsim"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
+
+[[package]]
+name = "stylist"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7687c91ed89b4f6a80e41a354263555980187b6c9ca6c0408089c6781dca4377"
+dependencies = [
+ "fastrand",
+ "instant",
+ "once_cell",
+ "stylist-core",
+ "stylist-macros",
+ "wasm-bindgen",
+ "web-sys",
+ "yew",
+]
+
+[[package]]
+name = "stylist-core"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "25355f8d91ef7d250ab53f1f8411b458f54c7dcf76a1cfef47355c0b1d0bfed9"
+dependencies = [
+ "nom",
+ "once_cell",
+ "thiserror",
+ "wasm-bindgen",
+]
+
+[[package]]
+name = "stylist-macros"
+version = "0.10.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7930b612c9250dac3735aa35fcc1084e51ca84bf7a270f23856df08598821251"
+dependencies = [
+ "itertools",
+ "litrs",
+ "log",
+ "nom",
+ "proc-macro-error",
+ "proc-macro2",
+ "quote",
+ "stylist-core",
+ "syn",
+]
 
 [[package]]
 name = "syn"

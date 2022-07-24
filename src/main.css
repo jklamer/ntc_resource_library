@@ -1,0 +1,132 @@
+:root {
+    --color_0: 255,255,255;
+    --color_1: 255,255,255;
+    --color_2: 0,0,0;
+    --color_3: 237,28,36;
+    --color_4: 0,136,203;
+    --color_5: 255,203,5;
+    --color_6: 114,114,114;
+    --color_7: 176,176,176;
+    --color_8: 255,255,255;
+    --color_9: 114,114,114;
+    --color_10: 176,176,176;
+    --color_11: 255,255,255;
+    --color_12: 232,230,230;
+    --color_13: 166,164,164;
+    --color_14: 110,110,107;
+    --color_15: 54,56,54;
+    --color_16: 235,240,255;
+    --color_17: 140,163,227;
+    --color_18: 49,92,213;
+    --color_19: 38,71,163;
+    --color_20: 22,39,84;
+    --color_21: 191,229,226;
+    --color_22: 152,202,199;
+    --color_23: 88,176,170;
+    --color_24: 59,117,113;
+    --color_25: 29,59,57;
+    --color_26: 196,174,221;
+    --color_27: 156,127,186;
+    --color_28: 102,56,152;
+    --color_29: 68,37,101;
+    --color_30: 34,19,51;
+    --color_31: 214,182,205;
+    --color_32: 174,134,163;
+    --color_33: 133,72,116;
+    --color_34: 89,48,77;
+    --color_35: 44,24,39;
+    --font_0: normal normal normal 24px/1.4em NTC,sans-serif;
+    --font_1: normal normal normal 16px/1.4em NTC,sans-serif;
+    --font_2: normal normal normal 56px/1.4em NTC,sans-serif;
+    --font_3: normal normal bold 600px/1.4em verdana,geneva,sans-serif;
+    --font_4: normal normal normal 84px/1.4em NTC,sans-serif;
+    --font_5: normal normal normal 30px/1.4em NTC,sans-serif;
+    --font_6: normal normal normal 24px/1.4em NTC,sans-serif;
+    --font_7: normal normal normal 20px/1.4em NTC,sans-serif;
+    --font_8: normal normal normal 16px/1.4em NTC,sans-serif;
+    --font_9: normal normal normal 15px/1.4em NTC,sans-serif;
+    --font_10: normal normal normal 12px/1.4em NTC,sans-serif;
+    --site-width: 980px;
+    --above-all-z-index: 100000;
+    --portals-z-index: 100001;
+    --minViewportSize: 320;
+    --maxViewportSize: 1920;
+}
+a, abbr, acronym, address, applet, b, big, blockquote, body, button, caption, center, cite, code, dd, del, dfn, div, dl, dt, em, fieldset, font, footer, form, h1, h2, h3, h4, h5, h6, header, html, i, iframe, img, ins, kbd, label, legend, li, nav, object, ol, p, pre, q, s, samp, section, small, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, title, tr, tt, u, ul, var {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+    /* background: transparent; */
+}
+
+.banner {
+    background-color: rgb(var(--color_16));
+    text-align: center;
+    font-weight: bold;
+    font-size: 56px;
+    color: rgb(var(--color_19));
+}
+/* 
+.library {
+    display: inline-block;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    background: rgb(var(--color_16));
+    padding: 10px 0;
+    width: 100%;
+} */
+
+.folder {
+    border-radius: 10px;
+    padding: 10px;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.style1 {
+    background-color: rgb(var(--color_12));
+}
+
+.style2 {
+    background-color: rgb(var(--color_17));
+}
+
+h1 {
+    font-weight: bold;
+    font: var(--font_2);
+}
+
+span {
+    font-family: NTC,sans-serif;
+}
+
+h2 {
+    font: var(--font_0)
+}
+
+h3 {
+    font: var(--font_0)
+}
+
+p body {
+    font: var(--font_10);
+}
+
+body, html {
+    height: 100%;
+    background-color: rgb(var(--color_16));
+    background-size: 100%;
+}
+
+html {
+    display: block;
+}
+
+html {
+    -webkit-locale: "en";
+}
